@@ -11,7 +11,6 @@ import subprocess
 import pytesseract
 
 
-
 # https://keras.io/examples/rl/deep_q_network_breakout/
 # https://www.learndatasci.com/tutorials/reinforcement-q-learning-scratch-python-openai-gym/
 
@@ -149,7 +148,6 @@ current_dir = str(pathlib.Path(__file__).parent.absolute())
 model.load_weights(current_dir + "\\save\\model_weights")
 model_target.load_weights(current_dir + "\\save\\model_target_weights")
 # model part -------------------------------------------------------------------------------------------------------------------------------
-
 
 # training part -------------------------------------------------------------------------------------------------------------------------------
 # running game

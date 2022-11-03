@@ -7,3 +7,5 @@ The training script is in charge to launch the game and take screenshots at ever
 The source code for training is highly inspired from this tutorial : https://keras.io/examples/rl/deep_q_network_breakout/
 
 The training might take a very long time for not so conclusive results, I did not train for long enough yet to notice a change in behavior.
+
+![Game](./game.png?raw=true "Game")

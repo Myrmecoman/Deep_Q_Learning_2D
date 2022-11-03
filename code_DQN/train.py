@@ -13,6 +13,7 @@ import pytesseract
 
 # https://keras.io/examples/rl/deep_q_network_breakout/
 # https://www.learndatasci.com/tutorials/reinforcement-q-learning-scratch-python-openai-gym/
+# to be evaluated : https://github.com/Z-T-WANG/ConvergentDQN
 
 
 # env part -------------------------------------------------------------------------------------------------------------------------------
@@ -156,7 +157,7 @@ time.sleep(5)
 
 
 # In the Deepmind paper they use RMSProp however then Adam optimizer improves training time
-optimizer = keras.optimizers.Adam(learning_rate=0.00025, clipnorm=1.0)
+optimizer = keras.optimizers.Adam(learning_rate=0.0005, clipnorm=1.0)
 
 # Experience replay buffers
 action_history = []

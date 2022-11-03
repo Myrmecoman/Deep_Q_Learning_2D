@@ -57,6 +57,9 @@ def screen_and_process():
 
 
 def reset():
+    global last_score
+
+    last_score = 0
     pyautogui.moveTo(1800, 1020)
     pyautogui.click()
     time.sleep(1)

@@ -106,17 +106,7 @@ def step(action, step_time = 0.03):
 # env part -------------------------------------------------------------------------------------------------------------------------------
 
 # model part -------------------------------------------------------------------------------------------------------------------------------
-# Configuration paramaters for the whole setup
-gamma = 0.99  # Discount factor for past rewards
-epsilon = 1.0  # Epsilon greedy parameter
-epsilon_min = 0.1  # Minimum epsilon greedy parameter
-epsilon_max = 1.0  # Maximum epsilon greedy parameter
-epsilon_interval = (epsilon_max - epsilon_min)  # Rate at which to reduce chance of random action being taken
-batch_size = 32  # Size of batch taken from replay buffer
-max_steps_per_episode = 10000
-
 num_actions = 4
-
 
 def create_q_model():
     inputs = layers.Input(shape=(84, 84, 3,))
@@ -174,6 +164,15 @@ time.sleep(5)
 
 # In the Deepmind paper they use RMSProp however then Adam optimizer improves training time
 optimizer = keras.optimizers.Adam(learning_rate=0.0005, clipnorm=1.0)
+
+# Configuration paramaters for the whole setup
+gamma = 0.99  # Discount factor for past rewards
+epsilon = 1.0  # Epsilon greedy parameter
+epsilon_min = 0.1  # Minimum epsilon greedy parameter
+epsilon_max = 1.0  # Maximum epsilon greedy parameter
+epsilon_interval = (epsilon_max - epsilon_min)  # Rate at which to reduce chance of random action being taken
+batch_size = 32  # Size of batch taken from replay buffer
+max_steps_per_episode = 10000
 
 # Experience replay buffers
 action_history = []
@@ -269,7 +268,6 @@ while True:  # Run until solved
                 q_action = tf.reduce_sum(tf.multiply(q_values, masks), axis=1)
                 # Calculate loss between new Q-value and old Q-value
                 loss = loss_function(updated_q_values, q_action)
-                print("loss : " + str(float(loss)))
 
             # Backpropagation
             grads = tape.gradient(loss, model.trainable_variables)
@@ -280,7 +278,9 @@ while True:  # Run until solved
             model_target.set_weights(model.get_weights())
             # Log details
             template = "running reward: {:.2f} at episode {}, frame count {}"
+            print("---------------------------------------------------------")
             print(template.format(running_reward, episode_count, frame_count))
+            print("---------------------------------------------------------")
 
         # Limit the state and reward history
         if len(rewards_history) > max_memory_length:

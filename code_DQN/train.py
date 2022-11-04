@@ -62,7 +62,7 @@ def reset():
     last_score = 0
     pyautogui.moveTo(1800, 1020)
     pyautogui.click()
-    time.sleep(1)
+    time.sleep(0.3)
 
     image = pyautogui.screenshot()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
@@ -72,26 +72,22 @@ def reset():
     return image
 
 
-def step(action, step_time = 0.001):
+def step(action, step_time = 0.03):
     global last_score
     #start_time = time.time()
 
     if (action == 0):
-        pyautogui.keyDown("Z")
+        pyautogui.press("Z")
         time.sleep(step_time)
-        pyautogui.keyUp("Z")
     if (action == 1):
-        pyautogui.keyDown("S")
+        pyautogui.press("S")
         time.sleep(step_time)
-        pyautogui.keyUp("S")
     if (action == 2):
-        pyautogui.keyDown("Q")
+        pyautogui.press("Q")
         time.sleep(step_time)
-        pyautogui.keyUp("Q")
     if (action == 3):
-        pyautogui.keyDown("D")
+        pyautogui.press("D")
         time.sleep(step_time)
-        pyautogui.keyUp("D")
 
     image, score = screen_and_process()
 
@@ -255,6 +251,7 @@ while True:  # Run until solved
                 q_action = tf.reduce_sum(tf.multiply(q_values, masks), axis=1)
                 # Calculate loss between new Q-value and old Q-value
                 loss = loss_function(updated_q_values, q_action)
+                print("loss : " + str(float(loss)))
 
             # Backpropagation
             grads = tape.gradient(loss, model.trainable_variables)

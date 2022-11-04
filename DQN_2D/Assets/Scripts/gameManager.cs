@@ -25,9 +25,9 @@ public class gameManager : MonoBehaviour
     private void Start()
     {
         // spawn good and bad objects
-        for (int i = -150; i < 150; i += 2)
+        for (int i = -50; i < 50; i += 2)
         {
-            for (int j = -150; j < 150; j += 2)
+            for (int j = -50; j < 50; j += 2)
             {
                 int rand = Random.Range(0, 2);
                 if (rand == 0 && (Mathf.Abs(i) > 3 || Mathf.Abs(j) > 3))

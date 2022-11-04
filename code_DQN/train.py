@@ -142,8 +142,28 @@ model = create_q_model()
 model_target = create_q_model()
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
-model.load_weights(current_dir + "\\save\\model_weights")
-model_target.load_weights(current_dir + "\\save\\model_target_weights")
+
+if (not os.path.isfile(current_dir + "\\save\\2\\checkpoint")):
+    model.save_weights(current_dir + "\\save\\2\\model_weights")
+    model_target.save_weights(current_dir + "\\save\\2\\model_target_weights")
+if (not os.path.isfile(current_dir + "\\save\\1\\checkpoint")):
+    model.save_weights(current_dir + "\\save\\1\\model_weights")
+    model_target.save_weights(current_dir + "\\save\\1\\model_target_weights")
+
+def get_oldest_folder(path):
+    newest = None
+    date = None
+    folders = [x for x in os.listdir(path) if os.path.isfile(x) == False]
+    for f in folders:
+        if (date == None or date > os.path.getmtime(path + "\\" + f)):
+            newest = f
+            date = os.path.getmtime(path + "\\" + f)
+    return os.path.join(path, newest)
+
+oldest_folder = get_oldest_folder(current_dir + "\\save")
+print("Reloading oldest folder : Q" + str(oldest_folder))
+model.load_weights(oldest_folder + "\\model_weights")
+model_target.load_weights(oldest_folder + "\\model_target_weights")
 # model part -------------------------------------------------------------------------------------------------------------------------------
 
 # training part -------------------------------------------------------------------------------------------------------------------------------
@@ -166,7 +186,7 @@ running_reward = 0
 episode_count = 0
 frame_count = 0
 # Number of frames to take random action and observe output
-epsilon_random_frames = 50000
+epsilon_random_frames = 1000
 # Number of frames for exploration
 epsilon_greedy_frames = 1000000.0
 # Maximum replay length
@@ -175,7 +195,7 @@ max_memory_length = 100000
 # Train the model after 4 actions
 update_after_actions = 4
 # How often to update the target network
-update_target_network = 10000
+update_target_network = 500
 # Using huber loss for stability
 loss_function = keras.losses.Huber()
 
@@ -184,8 +204,6 @@ while True:  # Run until solved
     episode_reward = 0
 
     for timestep in range(1, max_steps_per_episode):
-        # env.render(); Adding this line would show the attempts
-        # of the agent in a pop up window.
         frame_count += 1
 
         # Use epsilon-greedy for exploration
@@ -283,8 +301,9 @@ while True:  # Run until solved
 
     episode_count += 1
 
-    model.save_weights(current_dir + "\\save\\model_weights")
-    model_target.save_weights(current_dir + "\\save\\model_target_weights")
+    oldest_folder = get_oldest_folder(current_dir + "\\save")
+    model.save_weights(oldest_folder + "\\model_weights")
+    model_target.save_weights(oldest_folder + "\\model_target_weights")
 
     if running_reward > 40:  # Condition to consider the task solved
         print("Solved at episode {}!".format(episode_count))

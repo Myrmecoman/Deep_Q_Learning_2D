@@ -1,0 +1,3 @@
+running reward: -6.31 at episode 61.0, frame count 500.0
+running reward: -8.57 at episode 111.0, frame count 1000.0
+running reward: -10.51 at episode 159.0, frame count 1500.0

@@ -310,7 +310,7 @@ while True:  # Run until solved
     np.savez(current_dir + "\\save\\arrays5", episode_reward_history)
     np.savez(current_dir + "\\save\\arrays6", other_nbs)
 
-    if running_reward > 40:  # Condition to consider the task solved
+    if running_reward > 400:  # Condition to consider the task solved
         print("Solved at episode {}!".format(episode_count))
         break
 # training part -------------------------------------------------------------------------------------------------------------------------------

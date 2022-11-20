@@ -95,9 +95,9 @@ def step(action, step_time = 0.03):
     done = False
     if (score > last_score):
         done = True
-        adjusted = 10
+        adjusted = 100
     if (score < last_score):
-        adjusted = -15
+        adjusted = -5
     last_score = score
 
     #print(score)

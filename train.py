@@ -78,16 +78,13 @@ def step(action, step_time = 0.03):
 
     if (action == 0):
         pyautogui.press("Z")
-        time.sleep(step_time)
     if (action == 1):
         pyautogui.press("S")
-        time.sleep(step_time)
     if (action == 2):
         pyautogui.press("Q")
-        time.sleep(step_time)
     if (action == 3):
         pyautogui.press("D")
-        time.sleep(step_time)
+    time.sleep(step_time)
 
     image, score = screen_and_process()
 
